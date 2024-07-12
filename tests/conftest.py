@@ -60,14 +60,16 @@ def teardown_modules(qudi_instance):
     yield
     if qudi_instance.module_manager.modules:
         for module in qudi_instance.module_manager.modules:
-            qudi_instance.module_manager.remove_module(module,ignore_missing= True)
+            cuurent_modules = qudi_instance.module_manager.modules
+            if module in cuurent_modules:
+                qudi_instance.module_manager.remove_module(module,ignore_missing= True)
 
-
+"""
 def pytest_sessionfinish(session, exitstatus):
     instance = application.Qudi.instance()
-    logging.shutdown()
     if instance is not None:
         if instance.is_running:
             instance.quit()
         del instance
 
+"""

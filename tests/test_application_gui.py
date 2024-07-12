@@ -92,7 +92,7 @@ def test_configure_qudi(qudi_instance,qt_app,config):
     #print(len(qudi_instance.module_manager.modules)) # 43 modules 
 
 
-def test_run_exit(qudi_instance,qt_app,caplog, teardown_modules):
+def test_run_exit(qudi_instance,qt_app,caplog):
     """Test if the qudi application runs and exits properly
     Parameters
     ----------
@@ -104,11 +104,13 @@ def test_run_exit(qudi_instance,qt_app,caplog, teardown_modules):
         pytest fixture to capture logs
     """    
     try:
-        QTimer.singleShot(5000, qt_app.quit)
+        QTimer.singleShot(5000, qudi_instance.quit)
         qudi_instance.run()
     except SystemExit as e:
         assert RUN_SUCCESS_STR in caplog.text
         assert not qudi_instance.is_running 
+
+    qudi_instance.quit()
 
 
 

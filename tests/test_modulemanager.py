@@ -145,7 +145,6 @@ def test_activate_module(module_manager, config, sample_module_hardware, sample_
     for base in ['gui', 'logic', 'hardware']:
         for module_name, module_cfg in list(config[base].items()):
             module_manager.add_module(module_name, base, module_cfg, allow_overwrite=False, emit_change=True )
-    
     _, sample_hardware, _ = sample_module_hardware
     _, sample_logic, _ = sample_module_logic
     _, sample_gui, _ = sample_module_gui
