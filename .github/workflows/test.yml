@@ -51,7 +51,7 @@ jobs:
         pip install -e ".[dev-test]"
         cd ../qudi-core
     - name: Test different version of numpy
-      run: pip install  matrix.python-package-combination.package-version
+      run: pip install  ${{  matrix.python-package-combination.package-version }}
     - name: Test with pytest
       run: |
         pytest --ignore=tests/fit_methods -s
