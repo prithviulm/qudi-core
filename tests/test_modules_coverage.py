@@ -41,7 +41,7 @@ def test_coverage_individual(qt_app, module_manager, config, teardown_modules):
             cov.stop()
             assert module_manager.modules[module_name].is_active
             # Create a unique directory for each test function
-            test_dir =  os.path.join('coverage',f"coverage_{module_name} qudi iqo")
+            test_dir =  os.path.join('coverage',f"coverage_{module_name} qudi core")
             os.makedirs(test_dir, exist_ok=True)
             
             # Save the coverage report
