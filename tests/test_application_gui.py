@@ -31,8 +31,6 @@ LOGGER = get_logger(__name__)
 
 
 RUN_SUCCESS_STR = 'Starting Qt event loop'
-CONFIG = 'C:/qudi/qudi-core/tests/dummy.cfg'
-CONFIG = 'C:/qudi/default.cfg'
 
 
 def test_qudi_excepthook_handled(qudi_instance,caplog):
