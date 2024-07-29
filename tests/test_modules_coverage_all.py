@@ -25,35 +25,25 @@ import os
 import time
 
     
-def test_coverage_individual(qt_app, module_manager, config, teardown_modules):
+def test_coverage_combined(qt_app, module_manager, config, teardown_modules):
         for base in ['gui', 'logic', 'hardware']:
             for module_name, module_cfg in list(config[base].items()):
                 module_manager.add_module(module_name, base, module_cfg, allow_overwrite=False, emit_change=True )
+        cov = coverage.Coverage()
+        cov.start()
         gui_base = 'gui'
         for module_name, _ in list(config[gui_base].items()):
-            #print(module_name)
-            cov = coverage.Coverage()
-            cov.start()
-            
-        
             module_manager.activate_module(module_name)
-            #time.sleep(15)
-            cov.stop()
-            assert module_manager.modules[module_name].is_active
-            # Create a unique directory for each test function
-            test_dir =  os.path.join('coverage',f"coverage_{module_name} qudi core")
-            os.makedirs(test_dir, exist_ok=True)
-            
-            # Save the coverage report
-            cov.html_report(directory=test_dir)
-            cov.annotate(directory=test_dir)
+            assert module_manager.modules[module_name].is_active            
+        time.sleep(15)
 
-            cov.save()
+        cov.stop()
+        test_dir =  os.path.join('coverage',"coverage_all_qudi_iqo_modules")
+        os.makedirs(test_dir, exist_ok=True)
+        
+        cov.html_report(directory=test_dir)
+        cov.save()
 
-            #print(f"Coverage report saved to {test_dir}")
-            module_manager.deactivate_module(module_name)
-
-        #qudi_instance.quit()
-
+        print(f"Coverage report saved to {test_dir}")
 
 
