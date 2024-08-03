@@ -25,6 +25,8 @@ jobs:
         exclude:
           - python-version: '3.8'
             numpy-version: 'numpy==2.0.0'
+            scipy-version: ['1.10.0','1.14.0']
+
         
 
     steps:
