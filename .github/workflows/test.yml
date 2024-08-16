@@ -48,14 +48,14 @@ jobs:
         pip install -e ".[dev-test]"
         cd ../qudi-core
     - name: Test different version of numpy and scipy
-      run: pip install numpy == ${{  matrix.numpy-version }} scipy == ${{  matrix.scipy-version }}
+      run: pip install numpy==${{ matrix.numpy-version }} scipy==${{ matrix.scipy-version }}
     - name: Test with pytest
       run: |
         pytest --ignore=tests/fit_methods -s
     - name: Archive code coverage results
       uses: actions/upload-artifact@v4
       with:
-          name: code-coverage-report ${{ matrix.python-version }} ,  ${{  matrix.numpy-version }}  ${{  matrix.scipy-version }}
+          name: code-coverage-report ${{ matrix.python-version }} ,  ${{ matrix.numpy-version }}  ${{ matrix.scipy-version }}
           path: coverage
           retention-days: 5
     - name: Download all workflow run artifacts
