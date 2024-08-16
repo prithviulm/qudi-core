@@ -30,10 +30,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-package-combination.python-version }}
+    - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
       with:
-        python-version: ${{ matrix.python-package-combination.python-version }}
+        python-version: ${{ matrix.python-version }}
         cache: "pip"
         cache-dependency-path: pyproject.toml
     - name: Install dependencies
@@ -47,15 +47,15 @@ jobs:
         cd qudi-iqo-modules
         pip install -e ".[dev-test]"
         cd ../qudi-core
-    - name: Test different version of numpy
-      run: pip install  ${{  matrix.python-package-combination.packages }}
+    - name: Test different version of numpy and scipy
+      run: pip install numpy == ${{  matrix.numpy-version }} scipy == ${{  matrix.scipy-version }}
     - name: Test with pytest
       run: |
         pytest --ignore=tests/fit_methods -s
     - name: Archive code coverage results
       uses: actions/upload-artifact@v4
       with:
-          name: code-coverage-report ${{ matrix.python-package-combination.python-version }} ,  ${{  matrix.python-package-combination.packages }}
+          name: code-coverage-report ${{ matrix.python-version }} ,  ${{  matrix.numpy-version }}  ${{  matrix.scipy-version }}
           path: coverage
           retention-days: 5
     - name: Download all workflow run artifacts

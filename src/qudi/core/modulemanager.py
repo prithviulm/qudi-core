@@ -562,7 +562,6 @@ class ManagedModule(QtCore.QObject):
 
             # Establish module interconnections via Connector meta object in qudi module instance
             self._connect()
-
             # Activate this module
             if self._instance.is_module_threaded:
                 thread_name = self.module_thread_name
@@ -595,7 +594,6 @@ class ManagedModule(QtCore.QObject):
             self.__last_state = self.state
             self.sigStateChanged.emit(self._base, self._name, self.__last_state)
             self.sigAppDataChanged.emit(self._base, self._name, self.has_app_data)
-
             # Raise exception if by some reason no exception propagated to here and the activation
             # is still unsuccessful.
             if not self.is_active:

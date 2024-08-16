@@ -1,10 +1,9 @@
 import pytest
-from qudi.core import application,modulemanager
+from qudi.core import application
 from qudi.util.yaml import yaml_load
 from PySide2 import QtWidgets
 import weakref
-import logging
-import sys 
+from PySide2.QtCore import QTimer
 import os
 
 
@@ -73,3 +72,7 @@ def pytest_sessionfinish(session, exitstatus):
         del instance
 
 """
+
+def start_qudi(qudi_instance):
+    QTimer.singleShot(55000, qudi_instance.quit)
+    qudi_instance.run()
