@@ -223,7 +223,8 @@ class QudiNamespaceService(rpyc.Service):
         self._notifier_callbacks.pop(conn, None)
         host, port = conn._config["endpoints"][1]
         logger.info(f"Client [{host}]:{port:d} disconnected from local module service")
-
+        print(f"Client [{host}]:{port:d} disconnected from local module service")
+        
     def notify_module_change(self):
         logger.debug(
             "Local module server has detected a module state change and sends async "
