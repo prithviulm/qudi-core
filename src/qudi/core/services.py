@@ -216,14 +216,12 @@ class QudiNamespaceService(rpyc.Service):
             pass
         host, port = conn._config["endpoints"][1]
         logger.info(f"Client connected to local module service from [{host}]:{port:d}")
-        print(f"Client connected to local module service from [{host}]:{port:d}")
 
     def on_disconnect(self, conn):
         """code that runs when the connection is closing"""
         self._notifier_callbacks.pop(conn, None)
         host, port = conn._config["endpoints"][1]
         logger.info(f"Client [{host}]:{port:d} disconnected from local module service")
-        print(f"Client [{host}]:{port:d} disconnected from local module service")
         
     def notify_module_change(self):
         logger.debug(
