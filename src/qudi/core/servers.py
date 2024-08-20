@@ -153,13 +153,13 @@ class _ServerRunnable(QtCore.QObject):
                 port=self.port,
                 protocol_config=self.protocol_config,
                 authenticator=authenticator,
+                listener_timeout=None
             )
             logger.info(
                 f'Starting RPyC server "{self.thread().objectName()}" on '
                 f"[{self.host}]:{self.port:d}"
             )
-            print( f'Starting RPyC server "{self.thread().objectName()}" on '
-                f"[{self.host}]:{self.port:d}")
+ 
             logger.debug(
                 f"{self.thread().objectName()}: "
                 f"protocol_config is {self.protocol_config}, "
