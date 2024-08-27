@@ -135,7 +135,6 @@ class Gui(QtCore.QObject):
     def __init__(
         self, qudi_instance, stylesheet_path=None, theme=None, use_opengl=False
     ):
-        self.qudi_instance = qudi_instance
         if theme is None:
             theme = 'qudiTheme'
 
@@ -414,12 +413,9 @@ class Gui(QtCore.QObject):
             if state == 'deactivated':
                 self.system_tray_icon.remove_action(module_name)
             else:
-                #mod_manager = ModuleManager.instance()
-                mod_manager = self.qudi_instance.module_manager
-                mod_manager._lock.release()
+                mod_manager = ModuleManager.instance()
                 try:
                     module_inst = mod_manager[module_name].instance
                 except KeyError:
                     return
                 self.system_tray_icon.add_action(module_name, module_inst.show)
-                mod_manager._lock.lock()
