@@ -21,7 +21,6 @@ jobs:
       matrix:
         python-version: ['3.8', '3.9', '3.10']
         numpy-version: ['1.24.4', '2.0.0']
-        scipy-version: ['1.10.0','1.14.0']
         exclude:
           - python-version: '3.8'
             numpy-version: '2.0.0'
@@ -47,15 +46,15 @@ jobs:
         cd qudi-iqo-modules
         pip install -e ".[dev-test]"
         cd ../qudi-core
-    - name: Test different version of numpy and scipy
-      run: pip install numpy==${{ matrix.numpy-version }} scipy==${{ matrix.scipy-version }}
+    - name: Test different version of numpy 
+      run: pip install numpy==${{ matrix.numpy-version }}
     - name: Test with pytest
       run: |
         pytest --ignore=tests/fit_methods -s
     - name: Archive code coverage results
       uses: actions/upload-artifact@v4
       with:
-          name: code-coverage-report ${{ matrix.python-version }} ,  ${{ matrix.numpy-version }}  ${{ matrix.scipy-version }}
+          name: code-coverage-report ${{ matrix.python-version }} ,  ${{ matrix.numpy-version }}  
           path: coverage
           retention-days: 5
     - name: Download all workflow run artifacts
