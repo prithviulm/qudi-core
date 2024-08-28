@@ -51,7 +51,6 @@ jobs:
     - name: Test different version of numpy 
       run: |
         pip install numpy==${{ matrix.numpy-version }}
-        pip install scipy==1.14.0
     - name: Test with pytest
       run: |
         pytest --ignore=tests/fit_methods -s
