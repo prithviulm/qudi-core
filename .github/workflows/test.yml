@@ -11,6 +11,9 @@ on:
   schedule:
     - cron: '0 0 * * *' 
 
+permissions:
+  contents: write
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -87,10 +90,4 @@ jobs:
         pip freeze > reqs.txt
         git add reqs.txt
         git commit -m "updated reqs.txt to latest successful run"
-
-    - name: Push changes
-      if: success()
-      run: |
-        git push origin HEAD:${{ github.ref }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        git push
