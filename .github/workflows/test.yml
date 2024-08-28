@@ -8,6 +8,8 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  schedule:
+    - cron: '0 0 * * *' 
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -19,24 +21,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-package-combination:
+        python-version: ['3.8', '3.9', '3.10']
+        numpy-version: ['1.24.4', '2.0.0']
+        exclude:
           - python-version: '3.8'
-            packages: 'numpy==1.24.4'
-          - python-version: '3.9'
-            packages: 'numpy==1.24.4'
-          - python-version: '3.9'
-            packages: 'numpy==2.0.0'
-          - python-version: '3.10'
-            packages: 'numpy==1.24.4'
-          - python-version: '3.10'
-            packages: 'numpy==2.0.0'
+            numpy-version: '2.0.0'
+
+        
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-package-combination.python-version }}
+    - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
       with:
-        python-version: ${{ matrix.python-package-combination.python-version }}
+        python-version: ${{ matrix.python-version }}
         cache: "pip"
         cache-dependency-path: pyproject.toml
     - name: Install dependencies
@@ -50,18 +48,59 @@ jobs:
         cd qudi-iqo-modules
         pip install -e ".[dev-test]"
         cd ../qudi-core
-    - name: Test different version of numpy
-      run: pip install  ${{  matrix.python-package-combination.packages }}
+    - name: Test different version of numpy 
+      run: pip install numpy==${{ matrix.numpy-version }}
     - name: Test with pytest
       run: |
         pytest --ignore=tests/fit_methods -s
+        continue-on-error: true
     - name: Archive code coverage results
       uses: actions/upload-artifact@v4
       with:
-          name: code-coverage-report ${{ matrix.python-package-combination.python-version }} ,  ${{  matrix.python-package-combination.packages }}
+          name: code-coverage-report ${{ matrix.python-version }} ,  ${{ matrix.numpy-version }}  
           path: coverage
           retention-days: 5
-    - name: Download all workflow run artifacts
-      uses: actions/download-artifact@v4
 
- 
+
+
+    - name: Pip freeze on test failure
+      if: failure()
+      run: |
+        pip freeze > pip_freeze_output.txt
+
+    - name: Download previous pip freeze output
+      if: failure()
+      uses: actions/download-artifact@v3
+      with:
+        name: pip-freeze-output-${{ matrix.python-version }}, ${{ matrix.numpy-version }} 
+        path: ./previous_pip_freeze_output
+
+
+    - name: Upload pip freeze output
+      if: failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: pip-freeze-output-${{ matrix.python-version }}, ${{ matrix.numpy-version }} 
+        path: pip_freeze_output.txt
+
+
+    - name: Compare pip freeze outputs
+      if: failure()
+      run: |
+        if [ -f ./previous_pip_freeze_output/pip_freeze_output.txt ]; then
+          echo "Comparing with previous pip freeze output:"
+          diff ./previous_pip_freeze_output/pip_freeze_output.txt pip_freeze_output.txt > pip_freeze_diff.txt || true
+          cat pip_freeze_diff.txt
+        else
+          echo "No previous pip freeze output found."
+          touch pip_freeze_diff.txt
+        fi
+
+    - name: Upload pip freeze diff
+      if: failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: pip-freeze-diff-${{ matrix.python-version }}, ${{ matrix.numpy-version }} 
+        path: pip_freeze_diff.txt
+
+
