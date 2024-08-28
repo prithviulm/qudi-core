@@ -53,7 +53,7 @@ jobs:
     - name: Test with pytest
       run: |
         pytest --ignore=tests/fit_methods -s
-        continue-on-error: true
+      continue-on-error: true
     - name: Archive code coverage results
       uses: actions/upload-artifact@v4
       with:
@@ -87,14 +87,7 @@ jobs:
     - name: Compare pip freeze outputs
       if: failure()
       run: |
-        if [ -f ./previous_pip_freeze_output/pip_freeze_output.txt ]; then
-          echo "Comparing with previous pip freeze output:"
-          diff ./previous_pip_freeze_output/pip_freeze_output.txt pip_freeze_output.txt > pip_freeze_diff.txt || true
-          cat pip_freeze_diff.txt
-        else
-          echo "No previous pip freeze output found."
-          touch pip_freeze_diff.txt
-        fi
+       python compare_pip_freeze.py pip_freeze_output.txt ./previous_pip_freeze_output/pip_freeze_output.txt pip_freeze_diff.txt
 
     - name: Upload pip freeze diff
       if: failure()
