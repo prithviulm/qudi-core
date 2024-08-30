@@ -41,7 +41,7 @@ def test_coverage_individual(qt_app, module_manager, config, teardown_modules):
     """
     for base in ['gui', 'logic', 'hardware']:
         for module_name, module_cfg in list(config[base].items()):
-            module_manager.add_module(module_name, base, module_cfg, allow_overwrite=False, emit_change=True, load_module=False)
+            module_manager.add_module(module_name, base, module_cfg, allow_overwrite=False, emit_change=True)
     gui_base = 'gui'
     for module_name, _ in list(config[gui_base].items()):
         cov = coverage.Coverage()
