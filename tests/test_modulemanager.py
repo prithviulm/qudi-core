@@ -141,6 +141,8 @@ def test_activate_module(module_manager, config, sample_module_hardware, sample_
         fixture for instance of managed module for a sample gui module
     sample_module_logic : fixture
         fixture for instance of managed module for a sample logic module
+    teardown_modules : fixture
+        fixture for tearing down modules at the end
     """        
     for base in ['gui', 'logic', 'hardware']:
         for module_name, module_cfg in list(config[base].items()):

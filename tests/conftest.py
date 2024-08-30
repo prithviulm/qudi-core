@@ -63,16 +63,3 @@ def teardown_modules(qudi_instance):
             if module in cuurent_modules:
                 qudi_instance.module_manager.remove_module(module,ignore_missing= True)
 
-"""
-def pytest_sessionfinish(session, exitstatus):
-    instance = application.Qudi.instance()
-    if instance is not None:
-        if instance.is_running:
-            instance.quit()
-        del instance
-
-"""
-
-def start_qudi(qudi_instance):
-    QTimer.singleShot(55000, qudi_instance.quit)
-    qudi_instance.run()
