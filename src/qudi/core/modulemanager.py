@@ -209,6 +209,13 @@ class ModuleManager(QtCore.QObject):
                 )
 
     def activate_module(self, module_name):
+        if QtCore.QThread.currentThread() is not self.thread():
+            self.current_module_name = module_name
+            QtCore.QMetaObject.invokeMethod(self,
+            "_activate_module_slot",
+            QtCore.Qt.BlockingQueuedConnection)
+            return
+
         with self._lock:
             if module_name not in self._modules:
                 raise KeyError(
@@ -218,6 +225,13 @@ class ModuleManager(QtCore.QObject):
             self._modules[module_name].activate()
 
     def deactivate_module(self, module_name):
+        if QtCore.QThread.currentThread() is not self.thread():
+            self.current_module_name = module_name
+            QtCore.QMetaObject.invokeMethod(self,
+            "_deactivate_module_slot",
+            QtCore.Qt.BlockingQueuedConnection)
+            return
+
         with self._lock:
             if module_name not in self._modules:
                 raise KeyError(
@@ -272,6 +286,20 @@ class ModuleManager(QtCore.QObject):
             'ModuleManager.'
         )
         self.clear()
+
+    @QtCore.Slot()
+    def _activate_module_slot(self):
+        """
+        Helper slot that should only be called by activate_module when this method is switching to the main thread.
+        """
+        self.activate_module(self.current_module_name)
+
+    @QtCore.Slot()
+    def _deactivate_module_slot(self):
+        """
+        Helper slot that should only be called by deactivate_module when this method is switching to the main thread.
+        """
+        self.deactivate_module(self.current_module_name)
 
 
 class ManagedModule(QtCore.QObject):
@@ -776,7 +804,8 @@ class ManagedModule(QtCore.QObject):
                 else:
                     # qudi module import and reload
                     mod = importlib.import_module(f'qudi.{self._base}.{self._module}')
-                    importlib.reload(mod)
+                    if reload:
+                        importlib.reload(mod)
 
                     # Try getting qudi module class from imported module
                     mod_class = getattr(mod, self._class, None)
