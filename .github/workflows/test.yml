@@ -90,6 +90,7 @@ jobs:
         pip freeze > reqs.txt
         git add reqs.txt
         git commit -m "updated reqs.txt to latest successful run"
-        git push origin workflow
+        git branch
+        git push origin HEAD:workflow
       env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
