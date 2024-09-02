@@ -25,13 +25,7 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ['3.8', '3.9', '3.10']
-        numpy-version: ['1.24.4', '2.0.0']
-        exclude:
-          - python-version: '3.8'
-            numpy-version: '2.0.0'
-
-        
-
+       
     steps:
     - uses: actions/checkout@v4
       with:
@@ -55,32 +49,23 @@ jobs:
         cd qudi-iqo-modules
         pip install -e ".[dev-test]"
         cd ../qudi-core
-    - name: Test different version of numpy 
-      run: |
-        pip install numpy==${{ matrix.numpy-version }}
+
     - name: Test with pytest
       run: |
         pytest --ignore=tests/fit_methods -s
-      continue-on-error: true
-    - name: Archive code coverage results
-      uses: actions/upload-artifact@v4
-      with:
-          name: code-coverage-report ${{ matrix.python-version }} ,  ${{ matrix.numpy-version }}  
-          path: coverage
-          retention-days: 5
 
     - name: Compare pip freeze outputs
       if: failure()
       run: |
        pip freeze > failed_reqs.txt
-       python compare_pip_freeze.py failed_reqs.txt reqs.txt pip_freeze_diff.txt
+       python compare_pip_freeze.py failed_reqs.txt reqs_${{ matrix.python-version }}.txt pip_freeze_diff_${{ matrix.python-version }}.txt
 
     - name: Upload pip freeze diff
       if: failure()
       uses: actions/upload-artifact@v4
       with:
-        name: pip-freeze-diff-${{ matrix.python-version }}, ${{ matrix.numpy-version }} 
-        path: pip_freeze_diff.txt
+        name: pip-freeze-diff-${{ matrix.python-version }}
+        path: pip_freeze_diff_${{ matrix.python-version }}.txt
 
 
     - name: Configure git
@@ -91,10 +76,9 @@ jobs:
     - name: Pip freeze on test success and commit latest deps
       if: success()
       run: |
-        pip freeze > reqs.txt
-        git add reqs.txt
+        pip freeze > reqs_${{ matrix.python-version }}.txt
+        git add reqs_${{ matrix.python-version }}.txt
         git commit -m "updated reqs.txt to latest successful run"
-        git branch --show-current
         git pull
         git push origin HEAD:workflow
       env:

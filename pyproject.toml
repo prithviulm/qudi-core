@@ -71,6 +71,7 @@ dependencies = [
     "scipy>=1.7.1",
     "jsonschema>=4.2.1",
     "opencv-python-headless"
+    "qtconsole"
 ]
 
 [tool.setuptools.packages.find]
@@ -79,8 +80,6 @@ exclude = ["qudi.artwork"]
 
 [tool.setuptools.package-dir]
 "" = "src"
-
-
 
 [tool.setuptools.package-data]
 "qudi" = [
