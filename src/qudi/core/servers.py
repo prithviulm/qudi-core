@@ -158,6 +158,7 @@ class _ServerRunnable(QtCore.QObject):
                 f'Starting RPyC server "{self.thread().objectName()}" on '
                 f"[{self.host}]:{self.port:d}"
             )
+ 
             logger.debug(
                 f"{self.thread().objectName()}: "
                 f"protocol_config is {self.protocol_config}, "
