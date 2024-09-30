@@ -1,24 +1,25 @@
-`index <../index.rst>`__
 
 --------------
+
+.. _config_options:
 
 Configuration Options
 =====================
 
-When working with `measurement modules <measurement_modules.rst>`__
+When working with :ref:`measurement modules <measurement_modules>`
 (hardware/logic/GUI) you may want to give the user the opportunity to
 statically configure certain aspects of the measurement module.
 
-| `Static configuration <configuration.rst>`__ in qudi is generally
+| :ref:`Static configuration <configuration>` in qudi is generally
   handled via a YAML configuration file that is read and parsed during
   the application startup process.
-| All `measurement modules <measurement_modules.rst>`__ included in the
+| All :ref:`measurement modules <measurement_modules>` included in the
   qudi session are declared in this file (among other things). But apart
   from the mandatory properties you can declare any number of additional
   properties inside the ``options`` property for each measurement
   module.
-| Please refer to the `qudi configuration
-  documentation <configuration.rst>`__ for more details on config files.
+| Please refer to the :ref:`qudi configuration
+  documentation <configuration>` for more details on config files.
 
 A measurement module constant that is automatically initialized from the
 qudi configuration is called a “configuration option” or “config
@@ -39,7 +40,7 @@ members and prevent each measurement module to implement their own
 solution, qudi provides the meta object
 ``qudi.core.configoption.ConfigOption``.
 
-When implementing a `measurement module <measurement_modules.rst>`__
+When implementing a :ref:`measurement_module <measurement_modules>`
 (hardware/logic/GUI) you can simply instantiate ``ConfigOption`` class
 variables. These meta objects will be transformed into regular variable
 members of your measurement module instances and can be used like any
@@ -86,7 +87,7 @@ The corresponding module section in the config file would look like:
                ...
        ...
 
-name
+Name
 ~~~~
 
 Please note here that the variable name in the measurement module
@@ -97,7 +98,7 @@ argument specifies the field name of the config option in the qudi
 configuration and can be any YAML-compatible string as long as it is
 unique within a measurement module.
 
-default
+Default
 ~~~~~~~
 
 | This example is also defining an optional ``default`` value for the
@@ -110,7 +111,7 @@ default
   initialization if the corresponding field is not specified in the qudi
   configuration.
 
-missing
+Missing
 ~~~~~~~
 
 | The optional ``missing`` argument can be used to define the behaviour
@@ -118,21 +119,21 @@ missing
   default value. Ignored for non-optional config options.
 | Possible argument values are:
 
-+---------+------------------------------------------------------------+
-| value   | effect                                                     |
-+=========+============================================================+
-| ``'not  | Silently use the default value.                            |
-| hing'`` |                                                            |
-+---------+------------------------------------------------------------+
-| ``'     | Use default value but also logs an info message about the  |
-| info'`` | missing config option.                                     |
-+---------+------------------------------------------------------------+
-| ``'     | Use default value but also logs a warning about the        |
-| warn'`` | missing config option.                                     |
-+---------+------------------------------------------------------------+
-| ``'e    | Fail to initialize the module with an exception. Same as   |
-| rror'`` | for non-optional config options.                           |
-+---------+------------------------------------------------------------+
++--------------+------------------------------------------------------------+
+| value        | effect                                                     |
++==============+============================================================+
+| ``nothing``  | Silently use the default value.                            |
+|              |                                                            |
++--------------+------------------------------------------------------------+
+|   ``info``   | Use default value but also logs an info message about the  |
+|              | missing config option.                                     |
++--------------+------------------------------------------------------------+
+|   ``warn``   | Use default value but also logs a warning about the        |
+|              | missing config option.                                     |
++--------------+------------------------------------------------------------+
+|    ``error`` | Fail to initialize the module with an exception. Same as   |
+|              | for non-optional config options.                           |
++--------------+------------------------------------------------------------+
 
 checker
 ~~~~~~~
@@ -190,5 +191,3 @@ above also shows), you could combine that with the ``@staticmethod``
 decorator. But this is not necessary and just good style.
 
 --------------
-
-`index <../index.rst>`__

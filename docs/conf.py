@@ -26,11 +26,10 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
     'sphinx.ext.viewcode',
-    'sphinx_rtd_dark_mode',
     'sphinx.ext.intersphinx',
-    'sphinx.ext.doctest', 
-    'sphinx.ext.coverage', 
-    'sphinx.ext.napoleon',
+    'sphinx.ext.doctest',
+    "sphinx_design", 
+    'sphinx.ext.coverage'
 ]
 intersphinx_mapping = {
     'PySide2': (
@@ -52,13 +51,38 @@ autodoc_mock_imports = ['lmfit']
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'pydata_sphinx_theme'
-# html_theme = 'sphinx_book_theme'
-# html_theme = 'sphinx_rtd_theme'
+html_logo = "../src/qudi/artwork/logo/logo_qudi.ico"
 html_theme_options = {
+    "logo": {
+        "text": "Qudi-Core",
+        "image_dark": "../src/qudi/artwork/logo/logo_qudi.ico",
+    },
+    'dark_mode': True,
+    "navbar_start": ["navbar-logo"],
+    "navbar_center": ["navbar-nav"],
+    "navbar_end": ["navbar-icon-links"],
+    "navbar_persistent": ["theme-switcher", "search-button"],
+    "footer_start": ["copyright", "sphinx-version"],
+    "footer_end": ["theme-version"],
+    "show_toc_level": 1,
+    "show_nav_level": 4,
+    "collapse_navigation": True,
+    "sidebar_hide_name": False,
     'navigation_with_keys': False,  # See https://github.com/pydata/pydata-sphinx-theme/issues/1492
 }
-html_static_path = []  # Normally defaults to '_static' but we don't have any static files.
-default_dark_mode = False  # For sphinx_rtd_dark_mode. Dark mode needs tweaking so not defaulting to it yet.
+
+html_sidebars = {
+    "**": ["sidebar-nav-bs", "sidebar-ethical-ads"]
+}
+html_static_path = ['_static']
+# html_css_files = [
+#     'custom.css',
+# ]
+
+
+
+
+default_dark_mode = True  # For sphinx_rtd_dark_mode. Dark mode needs tweaking so not defaulting to it yet.
 
 numpydoc_show_class_members = False
 numpydoc_show_inherited_class_members = False
@@ -67,18 +91,24 @@ numpydoc_class_members_toctree = False
 # Example autodoc settings
 autodoc_default_options = {
     'members': True,    # Document all members (methods and attributes)
-    'undoc-members': True,   # Include members without docstrings
-    'show-inheritance': True,   # Show inheritance links
+    'undoc-members': False,   # Include members without docstrings
+    'show-inheritance': True,
+    'inherited-members': False   # Show inheritance links
     # Other options as needed
 }
 
-napoleon_numpy_docstring = True
-napoleon_google_docstring = False
-napoleon_include_init_with_doc = True
-napoleon_include_private_with_doc = False
-napoleon_include_special_with_doc = True
-napoleon_use_param = True
-napoleon_use_rtype = True
+intersphinx_mapping = {
+    'iqo': ('https://qudi-iqo-modules.readthedocs.io/en/george/index.html', None),
+}
+
+
+# napoleon_numpy_docstring = True
+# napoleon_google_docstring = False
+# napoleon_include_init_with_doc = True
+# napoleon_include_private_with_doc = False
+# napoleon_include_special_with_doc = True
+# napoleon_use_param = True
+# napoleon_use_rtype = True
 
 
 # This gives the full name of the inherited classes in the documentation. It would be better if we could

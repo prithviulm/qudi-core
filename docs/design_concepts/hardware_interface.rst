@@ -2,6 +2,8 @@
 
 --------------
 
+.. _hardware_interface:
+
 Hardware Interface
 ==================
 
@@ -23,15 +25,15 @@ hardware interface classes usually located in ``qudi.interface``.
   interface.
 
 Since the interface subclass that implements all the abstract members is
-also a subclass of ``Base``, this class is then called a `hardware
-module <../404.rst>`__.
+also a subclass of ``Base``, this class is then called a :ref:`hardware
+module <error>`.
 
 .. raw:: html
 
    <!-- This link to the IQO modules needs to be updated once that documentation is up -->
 
-See also the detailed `qudi
-modules <https://github.com/Ulm-IQO/qudi-iqo-modules/blob/main/docs/installation_guide.md>`__
+See also the detailed :ref:`qudi
+modules <iqo>`
 documentation if you want to know more about what defines a qudi module
 and the respective inheritance trees.
 

@@ -2,6 +2,8 @@
 
 --------------
 
+.. _configuration:
+
 Configuration
 =============
 
@@ -91,6 +93,8 @@ Example:
        my_gui_module:
            ...
 
+.. _remote_module_server:
+
 remote_modules_server
 ^^^^^^^^^^^^^^^^^^^^^
 
@@ -116,38 +120,22 @@ remote_modules_server
 In case you want to serve local modules to other qudi instances, the
 server configuration is a mapping with the following properties:
 
-+----+------+---------------------------------------------------------+
-| pr | type | description                                             |
-| op |      |                                                         |
-| er |      |                                                         |
-| ty |      |                                                         |
-+====+======+=========================================================+
-| `  | ``s  | Host name of the server to be reached with. If you want |
-| `a | tr`` | to serve only local qudi instances, you can set this to |
-| dd |      | ``'localhost'``.                                        |
-| re |      |                                                         |
-| ss |      |                                                         |
-| `` |      |                                                         |
-+----+------+---------------------------------------------------------+
-| `` | ``i  | Port number to bind the server to.                      |
-| po | nt`` |                                                         |
-| rt |      |                                                         |
-| `` |      |                                                         |
-+----+------+---------------------------------------------------------+
-| `` | `    | Path to the SSL certificate file to use for connection  |
-| ce | `Opt | encryption. Unsecured if omitted.                       |
-| rt | iona |                                                         |
-| fi | l[st |                                                         |
-| le | r]`` |                                                         |
-| `` |      |                                                         |
-+----+------+---------------------------------------------------------+
-| `  | `    | Path to the SSL key file to use for connection          |
-| `k | `Opt | encryption. Unsecured if omitted.                       |
-| ey | iona |                                                         |
-| fi | l[st |                                                         |
-| le | r]`` |                                                         |
-| `` |      |                                                         |
-+----+------+---------------------------------------------------------+
++--------------+--------------------+-----------------------------------------------------------+
+| property     | type               | description                                               |
++==============+====================+===========================================================+
+| ``address``  | ``str``            | Host name of the server to be reached. If you want to     |
+|              |                    | serve only local qudi instances, you can set this to      |
+|              |                    | ``'localhost'``.                                          |
++--------------+--------------------+-----------------------------------------------------------+
+| ``port``     | ``int``            | Port number to bind the server to.                        |
++--------------+--------------------+-----------------------------------------------------------+
+| ``certfile`` | ``Optional[str]``  | Path to the SSL certificate file to use for connection    |
+|              |                    | encryption. Unsecured if omitted.                         |
++--------------+--------------------+-----------------------------------------------------------+
+| ``keyfile``  | ``Optional[str]``  | Path to the SSL key file to use for connection            |
+|              |                    | encryption. Unsecured if omitted.                         |
++--------------+--------------------+-----------------------------------------------------------+
+
 
 Example:
 
@@ -287,8 +275,8 @@ is called ``MyModuleClass`` and can be imported from
            allow_remote: True
 
 | In order to interface different modules with each other, qudi modules
-  are employing a meta-object called a ``Connector`` (`more details
-  here <connectors.rst>`__).
+  are employing a meta-object called a ``Connector`` (:ref:`more details
+  here <connectors>`).
 | If the logic module in our example needs to be connected to other
   modules (logic or hardware), you have to specify this in the module
   configuration as well. The modules to connect to are addressed by
@@ -303,8 +291,8 @@ is called ``MyModuleClass`` and can be imported from
                my_connector_name: 'my_other_module'  
 
 | Now in order to configure static variables in the module configuration
-  qudi modules use ``ConfigOption`` meta-objects (`more details
-  here <config_options.rst>`__).
+  qudi modules use ``ConfigOption`` meta-objects (:ref:`more details
+  here <config_options>`).
 | If the logic module in our example needs to have options configured,
   you have to specify this in the module configuration as well. The name
   of the config option is determined by the respective ``ConfigOption``
@@ -323,6 +311,8 @@ is called ``MyModuleClass`` and can be imported from
                    - 42
                    - 123.456
                    - ['a', 'b', 'c']
+
+.. _remote_module:
 
 Remote Module
 ^^^^^^^^^^^^^

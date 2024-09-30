@@ -1,4 +1,4 @@
-`index <index.rst>`__
+.. _getting_started:
 
 --------------
 
@@ -21,14 +21,13 @@ on your own computer first.
   simulate this hardware type in the absence of a real instrument.
 
 The installation however is always the same. You can refer to the
-detailed step-by-step `installation guide <setup/installation.rst>`__ to
+detailed step-by-step :ref:`installation guide <installation>` to
 install qudi.
 
 Startup
 -------
 
-Time to fire up the engines… Please refer to the detailed `startup
-guide <setup/startup.rst>`__ to run qudi.
+Time to fire up the engines… Please refer to the detailed :ref:`startup guide <startup>` to run qudi.
 
 If you have set up everything correctly, you should see the main window
 of qudi coming up.
@@ -42,21 +41,21 @@ toolchain usually consists out of modules dedicated to - **Logic**:
 “Brains” of each application. Configure, control and monitor the
 measurement. Orchestrate hardware. - **Hardware**: Similar to a driver.
 Provide simple, abstracted
-`interfaces <design_concepts/hardware_interface.rst>`__ to avoid the
+:ref:`interfaces <hardware_interface>` to avoid the
 logic from needing to “speak” the language of each specific device. -
 **GUI**: User-friendly graphical interfaces.
 
 An example for an addon repository that providess several measurement
 toolchains is the
-`qudi-iqo-modules <https://github.com/Ulm-IQO/qudi-iqo-modules>`__
+:ref:`qudi-iqo-modules <iqo>`
 package (developed by the Institute for Quantum Optics of Ulm
 University). Installing it is a great and simple way to play around with
 qudi, as it comes with dummy hardware modules that run even without
 connecting real instrumentation hardware.
 
 After a fresh installation of qudi-iqo-modules, make sure that you load
-the ``default.cfg`` as described in the `iqo-modules installation
-guide <https://github.com/Ulm-IQO/qudi-iqo-modules/blob/main/docs/installation_guide.md>`__.
+the ``default.cfg`` as described in the :ref:`iqo-modules installation
+guide <iqo>`.
 Qudi should then run with only dummy hardware modules configured after a
 restart. That means you can load any toolchain you like by clicking on
 the respective GUI module name in the main window without breaking
@@ -81,8 +80,8 @@ Configuration
 For telling qudi what modules to use and how they should connect to each
 other, you need to provide a setup-specific config file.
 
-Please refer to the detailed `configuration
-guide <design_concepts/configuration.rst>`__ to set up a proper qudi
+Please refer to the detailed :ref:`configuration
+guide <configuration>` to set up a proper qudi
 config for your needs.
 
 Extending qudi
@@ -99,8 +98,8 @@ Choose a qudi addon repository to work in
 
 | In that case, you will need to go even deeper in the code. There are
   two alternative ways of approaching qudi development: 1. You can
-  `install
-  qudi-iqo-modules <https://github.com/Ulm-IQO/qudi-iqo-modules/blob/main/docs/installation_guide.md>`__
+  :ref:`install
+  qudi-iqo-modules <iqo>`
   in dev mode (mind ``python -m pip install -e .`` in the instruction)
   and change or add modules there locally at your liking.
 | If you need to share changes with others online, it might be advisable
@@ -115,7 +114,7 @@ Choose a qudi addon repository to work in
 
 With both ways, you’ll be able to install your own developments on top
 of an existing qudi-core installation, as described in `Step
-4 <setup/installation.rst#step-4-install-measurement-module-addons>`__ of
+4 </docs/_build/html/setup/installation.html#step-4-install-measurement-module-addons>`__ of
 the installation instructions.
 
 | You may even want to share your hard work with others or find people
@@ -178,8 +177,8 @@ via config file, and - ``Signal`` for easy (asynchronous) communication
 with connected qudi modules.
 
 For more info on the software infrastructure that your custom module may
-use, please refer to the `measurement
-modules <design_concepts/measurement_modules.rst>`__ documentation.
+use, please refer to the :ref:`measurement
+modules <measurement_modules>` documentation.
 
 | After you successfully loaded your custom logic in the qudi manager,
   you can go on by adding more functions and stripping away not needed
@@ -193,4 +192,3 @@ modules <design_concepts/measurement_modules.rst>`__ documentation.
 
 --------------
 
-`index <index.rst>`__
