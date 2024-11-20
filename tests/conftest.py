@@ -1,10 +1,9 @@
 import pytest
-from qudi.core import application,modulemanager
+from qudi.core import application
 from qudi.util.yaml import yaml_load
 from PySide2 import QtWidgets
 import weakref
-import logging
-import sys 
+from PySide2.QtCore import QTimer
 import os
 
 
@@ -64,12 +63,3 @@ def teardown_modules(qudi_instance):
             if module in cuurent_modules:
                 qudi_instance.module_manager.remove_module(module,ignore_missing= True)
 
-"""
-def pytest_sessionfinish(session, exitstatus):
-    instance = application.Qudi.instance()
-    if instance is not None:
-        if instance.is_running:
-            instance.quit()
-        del instance
-
-"""
